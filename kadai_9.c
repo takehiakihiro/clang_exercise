@@ -7,7 +7,7 @@ struct memory_alignment {
   uint32_t third;
   uint8_t fourth;
   uint32_t fifth;
-}
+};
 
 int main(void)
 {

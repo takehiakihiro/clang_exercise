@@ -1,6 +1,10 @@
-TARGET=echo_server echo_client text_0 kadai_1 kadai_2 kadai_3 kadai_5 kadai_7 kadai_8 kadai_9
+TARGET=binary_tree_test echo_server echo_client text_0 kadai_1 kadai_2 kadai_3 kadai_5 kadai_7 kadai_8 kadai_9
+CC=gcc
 
 all: $(TARGET)
+
+binary_tree_test: binary_tree.o binary_tree_test.o
+	gcc -o $@ $^
 
 text_0: text_0.c
 	gcc -o $@ $<

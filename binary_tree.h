@@ -7,11 +7,11 @@ typedef struct bt_node {
   int value;
 } bt_node_t;
 
-
-bt_node_t *bt_insert(bt_node_t *cur, int value);
-bt_node_t *bt_eject(bt_node_t *cur, int value);
-void bt_walk(bt_node_t *cur);
-void bt_free(bt_node_t *cur);
+bt_node_t *bt_insert(bt_node_t *root, int value);
+bt_node_t *bt_eject(bt_node_t *root, int value);
+void bt_walk(bt_node_t *root);
+void bt_free(bt_node_t *root);
+bt_node_t *bt_search(bt_node_t *root, int value);
 
 #endif
 

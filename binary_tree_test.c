@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include "binary_tree.h"
+#include <stdio.h>
 
 /**
  * @brief main
@@ -24,11 +24,31 @@ int main(void)
   bt_walk(root);
 
   printf("\n");
+  printf("search 6 %p\n", bt_search(root, 6));
+  printf("search 4 %p\n", bt_search(root, 4));
+  printf("search 8 %p\n", bt_search(root, 8));
+  printf("search 100 %p\n", bt_search(root, 100));
+  printf("search 5 %p\n", bt_search(root, 5));
+  printf("search 15 %p\n", bt_search(root, 15));
+  printf("search 3 %p\n", bt_search(root, 3));
+  printf("search 9 %p\n", bt_search(root, 9));
+  printf("\n");
 
   bt_eject(root, 5);
   bt_eject(root, 15);
   bt_eject(root, 3);
   bt_eject(root, 9);
+
+  printf("\n");
+  printf("search 6 %p\n", bt_search(root, 6));
+  printf("search 4 %p\n", bt_search(root, 4));
+  printf("search 8 %p\n", bt_search(root, 8));
+  printf("search 100 %p\n", bt_search(root, 100));
+  printf("search 5 %p\n", bt_search(root, 5));
+  printf("search 15 %p\n", bt_search(root, 15));
+  printf("search 3 %p\n", bt_search(root, 3));
+  printf("search 9 %p\n", bt_search(root, 9));
+  printf("\n");
 
   bt_walk(root);
 

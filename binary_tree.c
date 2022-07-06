@@ -1,6 +1,6 @@
+#include "binary_tree.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "binary_tree.h"
 
 /**
  * @brief 二分木要素追加
@@ -34,7 +34,28 @@ bt_node_t *bt_insert(bt_node_t *cur, int value)
 }
 
 /**
- *
+ * @brief 二分木要素検索
+ * @return 見つかったノードへのポインタ
+ */
+bt_node_t *bt_search(bt_node_t *cur, int value)
+{
+  if (NULL == cur) {
+    /* 一致する値を探したが、存在しないので終わり */
+    return NULL;
+  }
+
+  if (value < cur->value) {
+    return bt_search(cur->left, value);
+  }
+  else if (value > cur->value) {
+    return bt_search(cur->right, value);
+  }
+
+  return cur;
+}
+
+/**
+ * @brief 一番大きい値を持つノードを返す
  */
 static bt_node_t *bt_get_max(bt_node_t *node)
 {
@@ -46,8 +67,7 @@ static bt_node_t *bt_get_max(bt_node_t *node)
 
 /**
  * @brief 二分木要素削除
- * @retval 1: 削除対象が存在しなかった
- * @retval 2: 末端ノードを削除した
+ * @return ノードへのポインタ
  */
 bt_node_t *bt_eject(bt_node_t *cur, int value)
 {
@@ -95,13 +115,13 @@ bt_node_t *bt_eject(bt_node_t *cur, int value)
 void bt_walk(bt_node_t *cur)
 {
   if (cur == NULL) {
-    printf("leaf\n");
+    printf("leaf;\n");
     return;
   }
   printf("{\n");
   bt_walk(cur->left);
   printf("}\n");
-  printf("value=%d\n", cur->value);
+  printf("value = %d;\n", cur->value);
   printf("[\n");
   bt_walk(cur->right);
   printf("]\n");

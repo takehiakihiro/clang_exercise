@@ -5,39 +5,88 @@
 /**
  * @brief 二分木要素追加
  */
-int bt_insert(bt_node_t **node, int value)
+bt_node_t *bt_insert(bt_node_t *cur, int value)
 {
-  bt_node_t *cur = *node;
-  if (cur == NULL) {
+  if (NULL == cur) {
     /* 末端まで到達して値がないので新規登録場所に到達した */
     cur = (bt_node_t *)malloc(sizeof(bt_node_t));
-    if (cur == NULL) {
+    if (NULL == cur) {
       /* エラー発生 */
-      return -1;
+      return NULL;
     }
     cur->left = NULL;
     cur->right = NULL;
     cur->value = value;
-    *node = cur;
     /* ここから再起呼び出しがすべて折り返す */
-    return 0;
   }
-
-  if (value < cur->value) {
+  else if (value < cur->value) {
     /* 現在の位置のノードの値よりも新規のノードの値が小さいので左側に登録 */
     /* 再起呼び出し */
-    return bt_insert(&cur->left, value);
+    cur->left = bt_insert(cur->left, value);
   }
-  /* 現在の位置のノードの値よりも新規のノードの値が大きいので右側に登録 */
-  /* 再起呼び出し */
-  return bt_insert(&cur->right, value);
+  else {
+    /* 現在の位置のノードの値よりも新規のノードの値が大きいので右側に登録 */
+    /* 再起呼び出し */
+    cur->right = bt_insert(cur->right, value);
+  }
+
+  return cur;
+}
+
+/**
+ *
+ */
+static bt_node_t *bt_get_max(bt_node_t *node)
+{
+  while (NULL != node && NULL != node->right) {
+    node = node->right;
+  }
+  return node;
 }
 
 /**
  * @brief 二分木要素削除
+ * @retval 1: 削除対象が存在しなかった
+ * @retval 2: 末端ノードを削除した
  */
-int bt_eject(bt_node_t **cur, int value)
+bt_node_t *bt_eject(bt_node_t *cur, int value)
 {
+  bt_node_t *ret = NULL;
+
+  if (NULL == cur) {
+    /* 一致する値を探したが、存在しないので終わり */
+    return NULL;
+  }
+
+  if (value < cur->value) {
+    cur->left = bt_eject(cur->left, value);
+    return cur;
+  }
+  else if (value > cur->value) {
+    cur->right = bt_eject(cur->right, value);
+    return cur;
+  }
+
+  /* 値が一致するノードが見つかったのでメモリを解放 */
+  if (NULL == cur->left) {
+    /* leftがNULLなのでrightがそのままcurの位置に移動する */
+    ret = cur->right;
+    free(cur);
+  }
+  else if (NULL == cur->right) {
+    /* rightがNULLなのでleftがそのままcurの位置に移動する */
+    ret = cur->left;
+    free(cur);
+  }
+  else {
+    /* 両方にデータが存在するので、leftの一番大きい値を探して付け替える */
+    ret = bt_get_max(cur->left);
+    cur->value = ret->value;
+    /* 値を入れ替えたので、対象の場所を削除する */
+    cur->left = bt_eject(cur->left, ret->value);
+    ret = cur;
+  }
+  return ret;
 }
 
 /**
@@ -46,18 +95,32 @@ int bt_eject(bt_node_t **cur, int value)
 void bt_walk(bt_node_t *cur)
 {
   if (cur == NULL) {
+    printf("leaf\n");
     return;
   }
+  printf("{\n");
   bt_walk(cur->left);
+  printf("}\n");
   printf("value=%d\n", cur->value);
+  printf("[\n");
   bt_walk(cur->right);
+  printf("]\n");
 }
 
 /**
  * @brief 全削除
  */
-void bt_delete(bt_node_t *cur)
+void bt_free(bt_node_t *cur)
 {
+  if (NULL != cur) {
+    /* 左側を全部消す */
+    bt_free(cur->left);
+
+    /* 左側を全部消す */
+    bt_free(cur->right);
+
+    free(cur);
+  }
 }
 
 /* vim: set nu ts=2 sw=2 si et : */

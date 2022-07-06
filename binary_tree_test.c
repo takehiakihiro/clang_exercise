@@ -8,18 +8,31 @@ int main(void)
 {
   bt_node_t *root = NULL;
 
-  bt_insert(&root, 5);
-  bt_insert(&root, 3);
-  bt_insert(&root, 1);
-  bt_insert(&root, 15);
-  bt_insert(&root, 12);
-  bt_insert(&root, 19);
-  bt_insert(&root, 10);
-  bt_insert(&root, 8);
-  bt_insert(&root, 9);
-  bt_insert(&root, 4);
+  root = bt_insert(root, 5);
+  root = bt_insert(root, 3);
+  root = bt_insert(root, 1);
+  root = bt_insert(root, 15);
+  root = bt_insert(root, 12);
+  root = bt_insert(root, 19);
+  root = bt_insert(root, 10);
+  root = bt_insert(root, 8);
+  root = bt_insert(root, 9);
+  root = bt_insert(root, 4);
+  root = bt_insert(root, 13);
+  root = bt_insert(root, 14);
 
   bt_walk(root);
+
+  printf("\n");
+
+  bt_eject(root, 5);
+  bt_eject(root, 15);
+  bt_eject(root, 3);
+  bt_eject(root, 9);
+
+  bt_walk(root);
+
+  bt_free(root);
 
   return 0;
 }

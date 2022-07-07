@@ -34,10 +34,10 @@ int main(void)
   printf("search 9 %p\n", bt_search(root, 9));
   printf("\n");
 
-  bt_eject(root, 5);
-  bt_eject(root, 15);
-  bt_eject(root, 3);
-  bt_eject(root, 9);
+  bt_erase(root, 5);
+  bt_erase(root, 15);
+  bt_erase(root, 3);
+  bt_erase(root, 9);
 
   printf("\n");
   printf("search 6 %p\n", bt_search(root, 6));

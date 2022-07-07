@@ -69,7 +69,7 @@ static bt_node_t *bt_get_max(bt_node_t *node)
  * @brief 二分木要素削除
  * @return ノードへのポインタ
  */
-bt_node_t *bt_eject(bt_node_t *cur, int value)
+bt_node_t *bt_erase(bt_node_t *cur, int value)
 {
   bt_node_t *ret = NULL;
 
@@ -79,11 +79,11 @@ bt_node_t *bt_eject(bt_node_t *cur, int value)
   }
 
   if (value < cur->value) {
-    cur->left = bt_eject(cur->left, value);
+    cur->left = bt_erase(cur->left, value);
     return cur;
   }
   else if (value > cur->value) {
-    cur->right = bt_eject(cur->right, value);
+    cur->right = bt_erase(cur->right, value);
     return cur;
   }
 
@@ -103,7 +103,7 @@ bt_node_t *bt_eject(bt_node_t *cur, int value)
     ret = bt_get_max(cur->left);
     cur->value = ret->value;
     /* 値を入れ替えたので、対象の場所を削除する */
-    cur->left = bt_eject(cur->left, ret->value);
+    cur->left = bt_erase(cur->left, ret->value);
     ret = cur;
   }
   return ret;
